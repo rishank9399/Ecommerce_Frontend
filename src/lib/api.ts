@@ -87,6 +87,13 @@ export const orderAPI = {
   updateStatus: (id: string, status: string) => api.patch(`/order/${id}/status`, { status }),
 };
 
+// Seller
+export const sellerAPI = {
+  getMyOrders: () => api.get("/seller/order"),
+  getById: (id: string) => api.get(`/seller/order/${id}`),
+  updateStatus: (id: string, status: string) => api.patch(`/seller/order/${id}/status`, { status }),
+};
+
 // Payment
 export const paymentAPI = {
   createOrder: () => api.post("/payment/create/order"),

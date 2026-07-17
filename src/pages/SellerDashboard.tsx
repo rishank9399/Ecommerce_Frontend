@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { productAPI, categoryAPI, orderAPI } from "@/lib/api";
+import { sellerAPI, productAPI, categoryAPI } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import { Plus, Edit, Trash2, Package, X } from "lucide-react";
 import { toast } from "sonner";
@@ -30,7 +30,7 @@ const SellerDashboard = () => {
     try {
       const [pRes, oRes, cRes] = await Promise.allSettled([
         productAPI.getAll(),
-        orderAPI.getMyOrders(),
+        sellerAPI.getMyOrders(),
         categoryAPI.getAll(),
       ]);
       if (pRes.status === "fulfilled") {
@@ -98,7 +98,7 @@ const SellerDashboard = () => {
 
   const handleUpdateOrderStatus = async (orderId: string, status: string) => {
     try {
-      await orderAPI.updateStatus(orderId, status);
+      await sellerAPI.updateStatus(orderId, status);
       toast.success("Order status updated");
       fetchData();
     } catch { toast.error("Failed to update status"); }
@@ -220,17 +220,20 @@ const SellerDashboard = () => {
                 <div>
                   <p className="text-sm font-medium text-foreground">Order #{order._id.slice(-8)}</p>
                   <p className="text-xs text-muted-foreground">{new Date(order.createdAt).toLocaleDateString()}</p>
-                  <p className="text-sm font-semibold text-foreground tabular-nums mt-1">₹{order.totalPrice?.toLocaleString()}</p>
+                  <p className="text-sm font-semibold text-foreground tabular-nums mt-1">₹{order.priceAtPurchase?.toLocaleString()}</p>
                 </div>
-                <select
-                  value={order.status}
-                  onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
-                  className="text-xs border border-input bg-background rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-ring"
-                >
-                  {["pending", "confirmed", "shipped", "delivered", "cancelled"].map((s) => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
-                </select>
+                <div>
+                  <p className="text-sm font-small text-foreground pb-1">Status: <span className="text-green-800">{order.status}</span></p>
+                  <select
+                    value={order.status}
+                    onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
+                    className="text-xs border border-input bg-background rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    {["pending", "confirmed", "shipped", "delivered", "cancelled"].map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           ))}

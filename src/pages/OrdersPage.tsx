@@ -54,8 +54,8 @@ const OrdersPage = () => {
                   {order.status}
                 </span>
               </div>
-              <p className="text-sm text-foreground">{order.products?.length || 0} item(s)</p>
-              <p className="text-sm font-semibold text-foreground tabular-nums">₹{(Number(order.totalPrice) / 100)?.toLocaleString()}</p>
+              <p className="text-md font-semibold text-foreground tabular-nums">{order.productId.title}</p>
+              <p className="text-sm text-foreground">₹{Number(order.priceAtPurchase)?.toLocaleString()}</p>
             </Link>
           ))}
         </div>

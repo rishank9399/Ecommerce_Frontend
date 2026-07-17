@@ -56,16 +56,15 @@ const OrderDetailPage = () => {
 
       {/* Items */}
       <div className="border border-border rounded-md p-4 mb-6 space-y-3">
-        {order.products?.map((item: any, i: number) => (
-          <div key={i} className="flex justify-between text-sm">
-            <span className="text-foreground">{item.productId?.title || "Product"} × {item.quantity}</span>
-            <span className="text-foreground tabular-nums">₹{(item.priceAtPurchase * item.quantity).toLocaleString()}</span>
+        
+          <div className="flex justify-between text-sm">
+            <span className="text-foreground">{order.productId?.title || "Product"} x {order.quantity}</span>
+            <span className="text-foreground tabular-nums">₹{(order.priceAtPurchase * order.quantity).toLocaleString()}</span>
           </div>
-        ))}
         <hr className="border-border" />
         <div className="flex justify-between font-semibold text-foreground">
           <span>Total</span>
-          <span className="tabular-nums">₹{(order.totalPrice/100)?.toLocaleString() }</span>
+          <span className="tabular-nums">₹{(order.priceAtPurchase)?.toLocaleString() }</span>
         </div>
       </div>
 
