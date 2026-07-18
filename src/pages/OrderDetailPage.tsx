@@ -64,7 +64,7 @@ const OrderDetailPage = () => {
         <hr className="border-border" />
         <div className="flex justify-between font-semibold text-foreground">
           <span>Total</span>
-          <span className="tabular-nums">₹{(order.priceAtPurchase)?.toLocaleString() }</span>
+          <span className="tabular-nums">₹{(order.priceAtPurchase * order.quantity)?.toLocaleString() }</span>
         </div>
       </div>
 
